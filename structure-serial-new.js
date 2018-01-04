@@ -27,7 +27,7 @@ function preload() {
 // var sunlight; //slider that indicates sunlight
 
 function setup() {
-  ipt = createInput();
+  // ipt = createInput();
   // ipt.position(20, 65);
   // ipt.style(z-index,10);
   //noCanvas();
@@ -52,16 +52,22 @@ function setup() {
 
 
   //create serial comunnication
-  // serial = new p5.SerialPort(); // make a new instance of  serialport librar
-  // serial.on('list', printList); // callback function for serialport list event
-  // serial.on('data', serialEvent); // callback for new data coming in
-  // serial.list(); // list the serial ports
-  // serial.open("/dev/cu.usbmodem1411"); // open a port
+  serial = new p5.SerialPort(); // make a new instance of  serialport librar
+  serial.on('list', printList); // callback function for serialport list event
+  serial.on('data', serialEvent); // callback for new data coming in
+  serial.list(); // list the serial ports
+  serial.open("/dev/cu.usbmodem1411"); // open a port
 
   //create a slider to control what time to display for each city. The value of the slider represents the timezone that gets the most sunlight or is 12:00 at noon.
   //e.g.: if slider.value=0, then cities in timezone 0 are at 12:00pm. All other timezone's time change accordingly.
   //update images to disply every time the slider value changes
   updateImages(initialTimezone);
+
+  //draw "you are here icon
+  // var currentPosition=createP("YOU ARE HERE");
+  // currentPosition.position(windowWidth/2,windowHeight/2);
+
+
 }
 
 function draw() {
@@ -69,43 +75,11 @@ function draw() {
   //try to draw the rotating thing
   // background(250,255,255,10);
 
-    timeTest = ipt.value();
-    console.log(timeTest);
-    drawGradient(timeTest);
-  // push();
-  // translate(width / 2, height / 2);
-  // var gradX = mouseX - width / 2;
-  // var gradY = mouseY - height / 2;
-  // var gradient = ctx.createRadialGradient(0, 0, 400, gradX, gradY, 0);
-  // gradient.addColorStop(0, "black");
-  // // gradient.addColorStop(0.3,"grey");
-  // gradient.addColorStop(1, "orange");
-  // ctx.fillStyle = gradient;
-  // ellipse(0, 0, 800, 800);
-  // pop();
-  // drawIndicator(timeTest);
+    // timeTest = ipt.value();
+    // console.log(timeTest);
+    // drawGradient(timeTest);
 
 
-}
-
-function drawGradient(i){
-
-  push();
-  translate(width / 2, height / 2);
-
-  //gradX=R*cos(a),gradY=R*sin(a)
-  //a=270+*15*i
-  var gradX=400*cos(radians(90+15*timeTest*(-1)));
-  var gradY=400*sin(radians(90+15*timeTest*(-1)));
-  // var gradX = mouseX - width / 2;
-  // var gradY = mouseY - height / 2;
-  var gradient = ctx.createRadialGradient(0, 0, 400, gradX, gradY, 0);
-  gradient.addColorStop(0, "black");
-  // gradient.addColorStop(0.3,"grey");
-  gradient.addColorStop(1, "orange");
-  ctx.fillStyle = gradient;
-  ellipse(0, 0, 800, 800);
-  pop();
 }
 
 function updateImages(t) {
@@ -216,26 +190,28 @@ function serialEvent() {
     maxReading = Math.max.apply(Math, fromSerials);
     minReading = Math.min.apply(Math, fromSerials);
     // maxTimezone=fromSerials.indexOf(maxReading);
-    if ((maxReading - minReading) > 15) {
+    if ((maxReading - minReading) > 14) {
       if (fromSerials.indexOf(maxReading) != maxTimezone) {
         maxTimezone = fromSerials.indexOf(maxReading);
         console.log("max timezone is" + maxTimezone);
-        updateImages(maxTimezone);
-        drawIndicator(fromSerials.indexOf(maxReading));
+        drawGradient(fromSerials.indexOf(maxReading));
+        // drawIndicator(fromSerials.indexOf(maxReading));
+        updateImages(fromSerials.indexOf(maxReading));
         console.log(maxTimezone);
         document.getElementById("container" + String(fromSerials.indexOf(maxReading))).style.color = "yellow";
         // console.log(fromSerials);
       }
-    } else {
-      sleep();
     }
+    // else {
+    //   sleep();
+    // }
   }
 }
 
 function sleep() {
   document.getElementById("label-container").innerHTML = "";
   document.getElementById("image-container").innerHTML = "";
-  // background(0,90);
+  background(0,80);
   //time is the time to display for each timezone
   var timezones = cityData.timezones; //access the timezone array in json file
   var positionX = window.innerWidth / 2; //specify initial x position for the first column of photos (timezone 0)
@@ -258,7 +234,7 @@ function sleep() {
         cityContainer = createDiv('');
         cityContainer.class("city-container");
         cityContainer.parent("#container" + String(i));
-        var currentImage = createImg(currentCity.path + 0 + currentCity.format); //./ciites/london/london0.png
+        var currentImage = createImg(currentCity.path + "-off" + currentCity.format); //./ciites/london/london0.png
         currentImage.id("image" + String(i) + String(j));
 
         // currentImage.position(positionX, positionY);
@@ -281,6 +257,32 @@ function sleep() {
   }
 }
 
+
+function drawGradient(i){
+  push();
+  translate(width / 2, height / 2);
+
+  //gradX=R*cos(a),gradY=R*sin(a)
+  //a=270+*15*i
+  var gradX=400*cos(radians(90+15*i*(-1)));
+  var gradY=400*sin(radians(90+15*i*(-1)));
+  // var gradX = mouseX - width / 2;
+  // var gradY = mouseY - height / 2;
+  var gradient = ctx.createRadialGradient(0, 0, 400, gradX, gradY, 0);
+  gradient.addColorStop(0, "black");
+  // gradient.addColorStop(0.3,"grey");
+  gradient.addColorStop(1, "orange");
+  ctx.fillStyle = gradient;
+  ellipse(0, 0, 800, 800);
+  rotate(radians(180 + i * (-1) * 15));
+  scale(2);
+  colorMode(HSL);
+  stroke(360, 100, frameCount % 360, 1);
+  strokeWeight(1);
+  line(0, 0, 0, -180);
+
+  pop();
+}
 
 function drawIndicator(i) {
   // background(0, 95);
@@ -308,8 +310,7 @@ function drawIndicator(i) {
   stroke(360, 100, frameCount % 360, 1);
   strokeWeight(2);
   line(0, 0, 0, -150);
-  x1 = x1 + random(-2, 2);
-  y1 = y1 + random(-2, 2);
+
   //x1=20
 
 
@@ -317,6 +318,6 @@ function drawIndicator(i) {
 
 
 
-// window.onload = function() {
-//   Maptastic("main-container");
-// };
+window.onload = function() {
+  Maptastic("main-container");
+};
