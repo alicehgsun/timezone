@@ -2,14 +2,14 @@
   "timezones": [
     [{
       "name": "London",
-      "path": "./cities/london/london",
+      "path": "/cities/london/london",
       "format": ".jpg"
 
     }],
 
     [{
         "name": "Copenhagen",
-        "path": "./cities/copenhagen/copenhagen",
+        "path": "/cities/copenhagen/copenhagen",
         "format":".jpg"
       },
       {
