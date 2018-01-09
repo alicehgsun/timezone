@@ -3,7 +3,7 @@
     [{
       "name": "London",
       "path": "./cities/london/london",
-      "format": ".png"
+      "format": ".jpg"
 
     }],
 
@@ -33,7 +33,7 @@
       {
         "name": "Kampala",
         "path": "/cities/kampala/kampala",
-        "format":".png",
+        "format":".jpg",
         "timezone": 2
       },
       {
@@ -60,7 +60,7 @@
       {
         "name": "Bangalore",
         "path": "/cities/bangalore/bangalore",
-        "format":".png",
+        "format":".jpg",
         "timezone": 5
       }
 
@@ -76,7 +76,7 @@
       {
         "name": "Jakarta",
         "path": "/cities/jakarta/jakarta",
-        "format":".png",
+        "format":".jpg",
         "timezone": 7
       },
 
@@ -97,7 +97,7 @@
       {
         "name": "Seoul",
         "path": "/cities/seoul/seoul",
-        "format":".png",
+        "format":".jpg",
         "timezone": 8
       },
       {
@@ -109,7 +109,7 @@
       {
         "name": "Taipei",
         "path": "/cities/taipei/taipei",
-        "format":".png",
+        "format":".jpg",
         "timezone": 8
       },
       {
@@ -156,13 +156,13 @@
     [{
         "name": "Los Angeles",
         "path": "/cities/newport/newport",
-        "format":".png",
+        "format":".jpg",
         "timezone": 15
       },
       {
         "name": "San Francisco",
         "path": "/cities/sf/sf",
-        "format":".png",
+        "format":".jpg",
         "timezone": 16
       }
     ],
@@ -181,7 +181,7 @@
       {
         "name": "Austin",
         "path": "/cities/austin/austin",
-        "format":".png",
+        "format":".jpg",
         "timezone": 17
       }
     ],
@@ -202,7 +202,7 @@
       {
         "name": "New York",
         "path": "/cities/newyork/newyork",
-        "format":".png",
+        "format":".jpg",
         "timezone": 19
       },
       {
@@ -214,7 +214,7 @@
       {
         "name": "Boston",
         "path": "/cities/boston/boston",
-        "format":".png",
+        "format":".jpg",
         "timezone": 19
       },
       {
@@ -245,7 +245,7 @@
     [{
       "name": "Ann Arbor",
       "path": "/cities/ann-arbor/annarbor",
-      "format":".png",
+      "format":".jpg",
       "timezone": 20
     }],
     [],
