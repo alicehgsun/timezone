@@ -78,6 +78,7 @@ height:200px;
       transform: scale(0.5);
       -webkit-text-stroke: 2px black;
       color: white;
+      font-family: helvetica;
   }
 
 .city-container {
